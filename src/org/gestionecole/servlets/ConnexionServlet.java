@@ -1,4 +1,4 @@
-package com.GestionEcole.servlet;
+package org.gestionecole.servlets;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ConnexionServlet extends HttpServlet {
 					User personne = userInListe;
 					request.setAttribute("personne", personne);
 					isConnected = true;
-					this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil.jsp" ).forward( request, response );
+					response.sendRedirect(request.getContextPath() + "/classe");
 				}
 			}
 		}
