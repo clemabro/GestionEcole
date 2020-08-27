@@ -27,6 +27,8 @@ public class ConnexionServlet extends HttpServlet {
 		if(!listeUserByLogin.isEmpty() && !(listeUserByLogin == null)) {
 			for(User userInListe : listeUserByLogin) {
 				if(userInListe.getPassword().equals(password)) {
+					User personne = userInListe;
+					request.setAttribute("personne", personne);
 					this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil.jsp" ).forward( request, response );
 				}
 			}

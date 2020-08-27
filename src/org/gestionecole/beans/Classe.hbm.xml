@@ -6,9 +6,8 @@
       <generator class="native"/>
     </id>
     <property name="nom" type="string" not-null="false" />
-    <set name="niveau">
-		<key  column="idNiveau" not-null="true"/>
-        <one-to-many class="org.gestionecole.beans.Niveau"/>
-	</set>
+    <many-to-one name="niveau" class="org.gestionecole.beans.Niveau" fetch="select">
+		<column name="idNiveau"/>
+	</many-to-one>
   </class>
 </hibernate-mapping>
