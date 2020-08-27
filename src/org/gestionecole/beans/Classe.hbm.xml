@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.gestionecole.beans.Classe" table="classe">
+    <id name="id" type="int" column="idClasse">
+      <generator class="native"/>
+    </id>
+    <property name="nom" type="string" not-null="false" />
+    <set name="niveau">
+		<key  column="idNiveau" not-null="true"/>
+        <one-to-many class="org.gestionecole.beans.Niveau"/>
+	</set>
+  </class>
+</hibernate-mapping>

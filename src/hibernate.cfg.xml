@@ -11,6 +11,17 @@
     <property name="show_sql">true</property>
     <property name="current_session_context_class">thread</property>
     
+    <mapping resource="org/gestionecole/beans/Classe.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Cour.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Eleve.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Materiel.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Matiere.hbm.xml"/>
     <mapping resource="org/gestionecole/beans/Niveau.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Note.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Professeur.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/Profil.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/TypeMateriel.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/TypeProf.hbm.xml"/>
+    <mapping resource="org/gestionecole/beans/User.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

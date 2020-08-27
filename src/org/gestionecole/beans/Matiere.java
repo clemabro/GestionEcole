@@ -1,24 +1,25 @@
 package org.gestionecole.beans;
 
-public class Niveau extends AbstractID {
+public class Matiere extends AbstractID {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3619887926500990588L;
+	private static final long serialVersionUID = 2947884886501450986L;
 	
 	private String libelle;
-	
+
 	/**
 	 * @param libelle
 	 */
-	public Niveau(String libelle) {
+	public Matiere(String libelle) {
 		this.libelle = libelle;
 	}
 
 	/**
 	 * 
 	 */
-	public Niveau() {
+	public Matiere() {
 	}
 
 	public String getLibelle() {

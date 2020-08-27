@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="org.gestionecole.beans.Professeur" table="professeur">
+    <id name="id" type="int" column="idProf">
+      <generator class="native"/>
+    </id>
+    <property name="nom" type="string" not-null="false" />
+    <property name="prenom" type="string" not-null="false" />
+    <property name="tel" type="string" not-null="false" />
+    <property name="mail" type="string" not-null="false" />
+    <set name="typeProf">
+		<key  column="idTypeProf" not-null="true"/>
+        <one-to-many class="org.gestionecole.beans.TypeProf"/>
+	</set>
+  </class>
+</hibernate-mapping>
