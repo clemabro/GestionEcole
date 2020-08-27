@@ -9,9 +9,8 @@
     <property name="prenom" type="string" not-null="false" />
     <property name="tel" type="string" not-null="false" />
     <property name="mail" type="string" not-null="false" />
-    <set name="typeProf">
-		<key  column="idTypeProf" not-null="true"/>
-        <one-to-many class="org.gestionecole.beans.TypeProf"/>
-	</set>
+	<many-to-one name="typeProf" class="org.gestionecole.beans.TypeProf" fetch="select">
+		<column name="idTypeProf"/>
+	</many-to-one>
   </class>
 </hibernate-mapping>

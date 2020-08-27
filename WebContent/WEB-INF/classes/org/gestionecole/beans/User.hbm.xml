@@ -7,9 +7,8 @@
     </id>
     <property name="login" type="string" not-null="false" />
     <property name="password" type="string" not-null="false" />
-    <set name="profil">
-		<key  column="idProfil" not-null="true"/>
-        <one-to-many class="org.gestionecole.beans.Profil"/>
-	</set>
+	<many-to-one name="profil" class="org.gestionecole.beans.Profil" fetch="select">
+		<column name="idProfil"/>
+	</many-to-one>
   </class>
 </hibernate-mapping>

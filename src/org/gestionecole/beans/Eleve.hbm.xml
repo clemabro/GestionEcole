@@ -8,9 +8,8 @@
     <property name="nom" type="string" not-null="false" />
     <property name="prenom" type="string" not-null="false" />
     <property name="dateNaissance" type="date" not-null="false" />
-    <set name="classe">
-		<key  column="idClasse" not-null="true"/>
-        <one-to-many class="org.gestionecole.beans.Classe"/>
-	</set>
+    <many-to-one name="classe" class="org.gestionecole.beans.Classe" fetch="select">
+		<column name="idClasse"/>
+	</many-to-one>
   </class>
 </hibernate-mapping>
