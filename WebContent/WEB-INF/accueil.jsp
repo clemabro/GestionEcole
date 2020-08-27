@@ -2,10 +2,9 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Accueil</title>
-</head>
+<jsp:include page="header.jsp">
+	<jsp:param name="title" value="Accueil" />
+</jsp:include>
 <body>
 <p>
 <%

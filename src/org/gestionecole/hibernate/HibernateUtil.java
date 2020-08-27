@@ -38,22 +38,21 @@ public class HibernateUtil {
 		return SESSION_FACTORY;
 	}
 	
-	public static Object get(final Class clazz, final Serializable object) {
+	public static Object get(final Class<?> clazz, final Serializable object) {
 		return get(clazz, object, getCurrentSession());
 	}
 	
-	public static Object get(final Class clazz, final Serializable object, final Session sessionHbn) {
+	public static Object get(final Class<?> clazz, final Serializable object, final Session sessionHbn) {
 		return sessionHbn.get(clazz, object);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public static Criteria createCriteria(final Class clazz) {
+	public static Criteria createCriteria(final Class<?> clazz) {
 		return createCriteria(clazz, getCurrentSession());
 	}
 
 
-	@SuppressWarnings("rawtypes")
-	public static Criteria createCriteria(final Class clazz, final Session sessionHbn) {
+	@SuppressWarnings("deprecation")
+	public static Criteria createCriteria(final Class<?> clazz, final Session sessionHbn) {
 		return sessionHbn.createCriteria(clazz);
 	}
 

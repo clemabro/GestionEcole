@@ -13,6 +13,11 @@ import org.gestionecole.business.UserManager;
 
 public class ConnexionServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5778012815705069460L;
+
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		this.getServletContext().getRequestDispatcher( "/WEB-INF/connexion.jsp").forward( request, response );
 	}
@@ -21,6 +26,7 @@ public class ConnexionServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("motdepasse");
 		String message = "Erreur de connexion votre mot de passe ou login est incorrect ";
+		Boolean isConnected = false;
 		
 		List <User> listeUserByLogin =  UserManager.getInstance().getByLogin(login);
 		
@@ -29,13 +35,15 @@ public class ConnexionServlet extends HttpServlet {
 				if(userInListe.getPassword().equals(password)) {
 					User personne = userInListe;
 					request.setAttribute("personne", personne);
+					isConnected = true;
 					this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil.jsp" ).forward( request, response );
 				}
 			}
 		}
-		request.setAttribute( "messageErreur", message );
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/connexion.jsp" ).forward( request, response );
 		
-		
+		if(!isConnected) {
+			request.setAttribute( "messageErreur", message );
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/connexion.jsp" ).forward( request, response );
+		}
 	}
 }

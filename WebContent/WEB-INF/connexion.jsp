@@ -1,11 +1,9 @@
 <%@ page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Connexion</title>
-        <link type="text/css" rel="stylesheet" href="form.css" />
-    </head>
+    <jsp:include page="header.jsp">
+		<jsp:param name="title" value="Connexion" />
+	</jsp:include>
     <body>
         <form method="post" action="connexion">
             <fieldset>
