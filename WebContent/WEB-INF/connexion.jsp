@@ -1,5 +1,4 @@
 <%@ page pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,20 +12,20 @@
                 <legend>Connexion</legend>
                 <p>Vous pouvez vous connecter via ce formulaire.</p>
 
-                <label for="nom">Adresse email <span class="requis">*</span></label>
-                <input type="email" id="email" name="email" value="<c:out value="${utilisateur.email}"/>" size="20" maxlength="60" />
-                <span class="erreur">${form.erreurs['email']}</span>
+                <label for="nom">Nom d'utilisateur</label>
+                <input type="text" id="login" name="login" value="Clement.aziblaireau"/>
+                <span class="erreur"></span>
                 <br />
 
-                <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
-                <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
-                <span class="erreur">${form.erreurs['motdepasse']}</span>
+                <label for="motdepasse">Mot de passe</label>
+                <input type="password" id="motdepasse" name="motdepasse" value="" />
+                <span class="erreur"><% if(request.getAttribute("messageErreur") != null) {out.println( request.getAttribute("messageErreur") ); }%></span>
                 <br />
 
                 <input type="submit" value="Connexion" class="sansLabel" />
                 <br />
                 
-                <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
+                <p></p>
             </fieldset>
         </form>
     </body>
