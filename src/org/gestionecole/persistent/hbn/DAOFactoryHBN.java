@@ -1,6 +1,7 @@
 package org.gestionecole.persistent.hbn;
 
 import org.gestionecole.persistent.DAOClasse;
+import org.gestionecole.persistent.DAOEleve;
 import org.gestionecole.persistent.DAOFactory;
 import org.gestionecole.persistent.DAONiveau;
 import org.gestionecole.persistent.DAOUser;
@@ -34,5 +35,10 @@ public class DAOFactoryHBN implements DAOFactory {
 	@Override
 	public DAOClasse getDAOClasse() {
 		return DAOClasseHBN.getInstance();
+	}
+
+	@Override
+	public DAOEleve getDAOEleve() {
+		return DAOEleveHBN.getInstance();
 	}
 }
