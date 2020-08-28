@@ -9,5 +9,11 @@
     <many-to-one name="niveau" class="org.gestionecole.beans.Niveau" fetch="select">
 		<column name="idNiveau"/>
 	</many-to-one>
+     <set name="eleves" table="eleve" inverse="true" lazy="false" fetch="select">
+         <key>
+             <column name="idClasse" not-null="true" />
+         </key>
+         <one-to-many class="org.gestionecole.beans.Eleve" />
+     </set>
   </class>
 </hibernate-mapping>

@@ -2,12 +2,16 @@ package org.gestionecole.servlets;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.gestionecole.beans.Classe;
 import org.gestionecole.beans.Eleve;
 import org.gestionecole.business.ClasseManager;
 import org.gestionecole.business.EleveManager;
@@ -40,9 +44,11 @@ public class EleveAjaxServlet extends HttpServlet {
 	
 	private static void getAllById(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Integer idClasse = Integer.valueOf(request.getParameter("idClasse"));
-		List<Eleve> listEleve = EleveManager.getInstance().getAllById(idClasse);
+		Classe classeSelected = ClasseManager.getClasseDAO().getById(idClasse);
+		Set<Eleve> elevesDeLaClasse = classeSelected.getEleves();
+		
 		JSONArray arrayJson = new JSONArray();
-		for(Eleve eleve : listEleve) {
+		for(Eleve eleve : elevesDeLaClasse) {
 			JSONObject jsonObj = new JSONObject();
 			jsonObj.put("idEleve", eleve.getId());
 			jsonObj.put("nom", eleve.getNom());

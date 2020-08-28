@@ -8,7 +8,7 @@
     <property name="nom" type="string" not-null="false" />
     <property name="prenom" type="string" not-null="false" />
     <property name="dateNaissance" type="date" not-null="false" />
-    <many-to-one name="classe" class="org.gestionecole.beans.Classe" fetch="select">
+    <many-to-one name="classe" class="org.gestionecole.beans.Classe" lazy="false" fetch="select">
 		<column name="idClasse"/>
 	</many-to-one>
   </class>
