@@ -42,7 +42,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
+                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve" onclick="addOptionSelectAdd()"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
                 	<div class="table-responsive">
 	                 	<table id="tabEleve" class="table table-bordered" width="100%"	cellspacing="0">
 	                 		<thead>
@@ -67,15 +67,7 @@
       </div>
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+      <jsp:include page="footer.jsp"></jsp:include>
 
     </div>
     <!-- End of Content Wrapper -->
@@ -118,31 +110,32 @@
       </div>
       <div class="modal-body mx-3">
         <div class="md-form mb-5">
-          <label data-error="wrong" data-success="right" for="orangeForm-name">Nom de l'élève</label>
-          <input type="text" id="orangeForm-name" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="nomEleve">Nom de l'élève</label>
+          <input type="text" id="nomEleve" class="form-control validate">
         </div>
         <div class="md-form mb-5">
-          <label data-error="wrong" data-success="right" for="orangeForm-email">Prénom de l'élève</label>
-          <input type="email" id="orangeForm-email" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="prenomEleve">Prénom de l'élève</label>
+          <input type="text" id="prenomEleve" class="form-control validate">
         </div>
 
         <div class="md-form mb-4">
-          <label data-error="wrong" data-success="right" for="orangeForm-pass">Date de naissance de l'élève</label>
-          <input type="password" id="orangeForm-pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="dateNaiss">Date de naissance de l'élève</label>
+          <input type="date" id="dateNaiss" class="form-control validate">
+        </div>
+        
+        <div class="md-form mb-4">
+          	<label for="selectClasseAdd">Classe de l'élève : </label>
+          	<select class="form-control" id="selectClasseAdd" disabled>
+			</select>
         </div>
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary">Ajouter l'élève</button>
+        <button class="btn btn-primary" onclick="saveEleve(event)">Ajouter l'élève</button>
         <button class="btn btn-light" data-dismiss="modal">Annuler</button>
       </div>
     </div>
   </div>
-</div>
-
-<div class="text-center">
-  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
-    Modal Register Form</a>
 </div>
   <script type="text/javascript">
   		var tableEleve;
@@ -162,6 +155,7 @@
 		    $.ajax({
 		        url: "<%= request.getContextPath() %>/eleveAjax",
 		        method: "POST",
+		        dataType : "json",
 		        data : {
 		        	"action" : "getAllById",
 		        	"idClasse" : idClasse
@@ -180,6 +174,37 @@
 		    });
 		    
 		    tableEleve = $('#tabEleve').DataTable(optionDataTable);
+		}
+		
+		var addOptionSelectAdd = function() {
+			optionToAdd = $('#selectClasse').find(":selected").clone();
+			$('#selectClasseAdd').children().remove();
+			$("#selectClasseAdd").append(optionToAdd);
+		}
+		
+		var saveEleve = function(event) {
+			event.preventDefault();
+			var idClasse = $('#selectClasseAdd').find(":selected").attr('id');
+			
+			$.ajax({
+		        url: "<%= request.getContextPath() %>/eleveAjax",
+		        method: "POST",
+		        data : {
+		        	"action" : "saveEleve",
+		        	"idClasse" : idClasse,
+		        	"nomEleve" : $('#nomEleve').val(),
+		        	"prenomEleve" : $('#prenomEleve').val(),
+		        	"dateNaissEleve" : $('#dateNaiss').val()
+		        },
+		        success: function (data) {
+		        	tableEleve.destroy();
+		        	reloadTableByIdClasse(idClasse);
+		        	$('#modalAjoutEleve').modal('toggle');
+		        },
+		        error : function(e) {
+		        	console.log(e)
+		        }
+		    });
 		}
 	</script>
 </body>
