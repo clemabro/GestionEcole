@@ -6,4 +6,6 @@ public interface DAOFactory {
 	DAOUser getDAOUser();
 
 	DAOClasse getDAOClasse();
+
+	DAOEleve getDAOEleve();
 }

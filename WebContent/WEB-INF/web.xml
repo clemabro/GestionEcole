@@ -24,5 +24,13 @@
 	<servlet-mapping>
 		<servlet-name>ClasseServlet</servlet-name>
 		<url-pattern>/classe</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>EleveAjaxServlet</servlet-name>
+		<servlet-class>org.gestionecole.servlets.EleveAjaxServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EleveAjaxServlet</servlet-name>
+		<url-pattern>/eleveAjax</url-pattern>
+	</servlet-mapping>
 </web-app>

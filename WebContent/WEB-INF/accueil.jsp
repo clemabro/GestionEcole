@@ -22,13 +22,11 @@
           <!-- Page Heading -->
           <div class="d-flex justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Classe :</h1>
-            <select class="form-control col-2 mr-auto ml-4">
+            <select class="form-control col-2 mr-auto ml-4" id="selectClasse">
             	<c:forEach var="classe" items="${listClasses}">
-            		<option>${classe.nom}</option>
+            		<option id="${classe.id}">${classe.nom}</option>
             	</c:forEach>
 			</select>
-			
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
           <!-- Content Row -->
@@ -44,9 +42,21 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-area">
-                  	
-                  </div>
+                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
+                	<div class="table-responsive">
+	                 	<table id="tabEleve" class="table table-bordered" width="100%"	cellspacing="0">
+	                 		<thead>
+	                 			<tr>
+	                 				<th>Nom</th>
+	                 				<th>Prénom</th>
+	                 				<th>Date de naissance</th>
+	                 				<th>Actions</th>
+	                 			</tr>
+	                 		</thead>
+	                 		<tbody>
+	                 		</tbody>
+	                 	</table>
+                 	</div>
                 </div>
               </div>
             </div>
@@ -96,5 +106,36 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+		$(document).ready(function() {
+				$('#tabEleve').DataTable(optionDataTable);
+		    	reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
+		    
+		} );
+		
+		var reloadTableByIdClasse = function(idClasse){
+			var table = $("#tabEleve tbody");
+		    
+		    $.ajax({
+		        url: "<%= request.getContextPath() %>/eleveAjax",
+		        method: "POST",
+		        data : {
+		        	"action" : "getAllById",
+		        	"id" : idClasse
+		        },
+		        success: function (data) {
+		            table.empty();
+		            console.log(data);
+		            
+		            $.each(data, function (a, b) {
+		                table.append("<tr><td>"+b.nom+"</td>" +
+		                    "<td>"+b.prenom+"</td>"+
+		                    "<td>" + b.dateNaissance + "</td><td></td></tr>");
+		            });
+		           
+		        }
+		    });
+		}
+	</script>
 </body>
 </html>
