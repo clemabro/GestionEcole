@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.gestionecole.beans.User;
 import org.gestionecole.business.UserManager;
@@ -36,6 +37,8 @@ public class ConnexionServlet extends HttpServlet {
 					User personne = userInListe;
 					request.setAttribute("personne", personne);
 					isConnected = true;
+					HttpSession session = request.getSession();
+					session.setAttribute("user", personne);
 					response.sendRedirect(request.getContextPath() + "/classe");
 				}
 			}
