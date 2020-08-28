@@ -22,11 +22,12 @@
           <!-- Page Heading -->
           <div class="d-flex justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Classe :</h1>
-            <select class="form-control col-2 mr-auto ml-4" id="selectClasse">
+            <select class="form-control col-2 ml-4" id="selectClasse">
             	<c:forEach var="classe" items="${listClasses}">
-            		<option id="${classe.id}">${classe.nom}</option>
+            		<option id="${classe.id}" value="${classe.niveau.libelle}">${classe.nom}</option>
             	</c:forEach>
 			</select>
+			<h4 class="mr-auto ml-4">Niveau de la classe : <i id="niveauClasse"></i></h4>
           </div>
 
           <!-- Content Row -->
@@ -42,7 +43,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve" onclick="addOptionSelectAdd()"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
+                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve" onclick="ajoutEleveModal()"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
                 	<div class="table-responsive">
 	                 	<table id="tabEleve" class="table table-bordered" width="100%"	cellspacing="0">
 	                 		<thead>
@@ -79,31 +80,12 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
   
   <div class="modal fade" id="modalAjoutEleve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Ajouter un élève</h4>
+        <h4 class="modal-title w-100 font-weight-bold" id="titreModal">Ajouter un élève</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -131,7 +113,7 @@
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary" onclick="saveEleve(event)">Ajouter l'élève</button>
+        <button id="btnSaveEleve" class="btn btn-primary" onclick="saveEleve(this.id)">Ajouter l'élève</button>
         <button class="btn btn-light" data-dismiss="modal">Annuler</button>
       </div>
     </div>
@@ -141,9 +123,11 @@
   		var tableEleve;
   			
 		$(document).ready(function() {
+				$('#niveauClasse').text($('#selectClasse').find(":selected").attr("value"));
 		    	reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
 		    	
 		    	 $('#selectClasse').on('change', '', function (e) {
+		    		 $('#niveauClasse').text($('#selectClasse').find(":selected").attr("value"));
 			    	 tableEleve.destroy();
 			    	 reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
 			    });
@@ -165,9 +149,15 @@
 		            console.log(data);
 		            
 		            $.each(data, function (a, b) {
-		                table.append("<tr><td>"+b.nom+"</td>" +
+		                table.append("<tr id='" + b.idEleve + "'><td>"+b.nom+"</td>" +
 		                    "<td>"+b.prenom+"</td>"+
-		                    "<td>" + b.dateNaissance + "</td><td></td></tr>");
+		                    "<td>" + b.dateNaissance + "</td>" +
+		                    "<td>" +
+		                    '<div class="d-flex justify-content-center align-item-center" style="display: block;">'+
+								'<i style="color: #4e73df; cursor: pointer" class="fas fa-edit mx-2" onclick="toggleModalForUpdate(this.id)" id="' + b.idEleve + '"></i>'+
+								'<i style="color: #dc3545; cursor: pointer" class="far fa-trash-alt mx-2" onclick="demanderSupprEleve(this.id)" id="' + b.idEleve + '"></i>'+
+							"</div>" +
+		                    "</td></tr>");
 		            });
 		           
 		        }
@@ -182,8 +172,7 @@
 			$("#selectClasseAdd").append(optionToAdd);
 		}
 		
-		var saveEleve = function(event) {
-			event.preventDefault();
+		var saveEleve = function(idEleve) {
 			var idClasse = $('#selectClasseAdd').find(":selected").attr('id');
 			
 			$.ajax({
@@ -192,6 +181,7 @@
 		        data : {
 		        	"action" : "saveEleve",
 		        	"idClasse" : idClasse,
+		        	"idEleve" : idEleve,
 		        	"nomEleve" : $('#nomEleve').val(),
 		        	"prenomEleve" : $('#prenomEleve').val(),
 		        	"dateNaissEleve" : $('#dateNaiss').val()
@@ -200,9 +190,77 @@
 		        	tableEleve.destroy();
 		        	reloadTableByIdClasse(idClasse);
 		        	$('#modalAjoutEleve').modal('toggle');
+		        	clearInputModal();
 		        },
 		        error : function(e) {
 		        	console.log(e)
+		        }
+		    });
+		}
+		
+		var clearInputModal = function(){
+			$('#nomEleve').val("");
+			$('#prenomEleve').val("");
+			$('#dateNaiss').val("");
+		}
+		
+		var toggleModalForUpdate = function(idEleve) {			
+			addOptionSelectAdd()
+			$.ajax({
+		        url: "<%= request.getContextPath() %>/eleveAjax",
+		        method: "POST",
+		        data : {
+		        	"action" : "getById",
+		        	"idEleve" : idEleve
+		        },
+		        success: function (data) {
+		        	console.log(data)
+		        	$('#nomEleve').val(data.nom);
+					$('#prenomEleve').val(data.prenom);
+					$('#dateNaiss').val(data.dateNaissance);
+					
+					$('#btnSaveEleve').attr("onclick", "saveEleve(" + idEleve + ");");
+					$('#btnSaveEleve').text("Modifier l'élève");
+					$('#titreModal').text("Modifier l'élève");
+					$('#modalAjoutEleve').modal('toggle');
+		        }
+		    });
+		}
+		
+		var ajoutEleveModal = function() {
+			addOptionSelectAdd();
+			clearInputModal();
+			$('#btnSaveEleve').attr("onclick", "saveEleve(0);");
+			$('#titreModal').text("Ajouter l'élève");
+			$('#btnSaveEleve').text("Ajouter l'élève");
+		}
+		
+		var demanderSupprEleve = function(idEleve) {
+			Notiflix.Confirm.Show('	Supprimer l\'élève',
+					'Êtes-vous sûr de supprimer cet élève ?',
+					'Supprimer',
+					'Annuler',
+					function(){
+						deleteEleve(idEleve);
+					},
+					function(){
+					});
+		}
+		
+		var deleteEleve = function(idEleve) {
+			$.ajax({
+		        url: "<%= request.getContextPath() %>/eleveAjax",
+		        method: "POST",
+		        data : {
+		        	"action" : "deleteById",
+		        	"idEleve" : idEleve
+		        },
+		        success: function (data) {
+		        	console.log(data)
+		        	$('#' + idEleve).fadeOut( 800,
+						function() {
+							$('#'+ idEleve).remove();
+						})
 		        }
 		    });
 		}

@@ -128,6 +128,6 @@ public class HibernateUtil {
 
 	public static void delete(final Object object, final Session sessionHbn) {
 		sessionHbn.delete(object);
-		sessionHbn.flush();
+		commit();
 	}
 }
