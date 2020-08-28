@@ -27,6 +27,8 @@ var optionDataTable = {
     	"order": [[ 0, "asc" ]],
     	"lengthChange": false,
     	"info" : false,
+    	"ordering": false,
+    	"searching": false,
     	"language": {
             "zeroRecords": "Aucune donnée",
             "search":         "Rechercher :",

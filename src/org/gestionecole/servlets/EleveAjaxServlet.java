@@ -2,8 +2,6 @@ package org.gestionecole.servlets;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -57,7 +55,6 @@ public class EleveAjaxServlet extends HttpServlet {
 			
 			arrayJson.add(jsonObj);
 		}
-				
 
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
