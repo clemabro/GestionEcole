@@ -12,6 +12,7 @@
     <%@include file="/ressource/datatable/datatables.min.css" %>
 </style>
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<link href='ressource/calendar/main.css' rel='stylesheet' />
 <script src="ressource/jquery/jquery.min.js"></script>
 <script src="ressource/popper/popper.min.js"></script>
 <script src="ressource/bootstrap/bootstrap.min.js"></script>
@@ -22,6 +23,7 @@
 <!-- Page level plugins -->
 <script src="ressource/js/chart.min.js"></script>
 <script type="text/javascript" src="ressource/datatable/datatables.min.js"></script>
+<script src='ressource/calendar/main.js'></script>
 <script type="text/javascript">
 var optionDataTable = {
     	"order": [[ 0, "asc" ]],
@@ -43,5 +45,15 @@ var optionDataTable = {
                 },
         }
     }
+
 </script>
+
+<style>
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+</style>
 </head>

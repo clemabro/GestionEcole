@@ -18,6 +18,11 @@
          <i class="fas fa-users"></i>
          <span>Classes</span></a>
      </li>
+     <li class="nav-item active">
+       <a class="nav-link" href="<%= request.getContextPath() %>/planning">
+         <i class="fas fa-calendar-alt"></i>
+         <span>Planning</span></a>
+     </li>
 
    </ul>
    <!-- End of Sidebar -->

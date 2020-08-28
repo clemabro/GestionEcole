@@ -41,4 +41,12 @@
 		<servlet-name>DeconnexionServlet</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>PlanningServlet</servlet-name>
+		<servlet-class>org.gestionecole.servlets.PlanningServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlanningServlet</servlet-name>
+		<url-pattern>/planning</url-pattern>
+	</servlet-mapping>
 </web-app>
