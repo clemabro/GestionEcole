@@ -42,7 +42,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
+                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
                 	<div class="table-responsive">
 	                 	<table id="tabEleve" class="table table-bordered" width="100%"	cellspacing="0">
 	                 		<thead>
@@ -106,6 +106,44 @@
       </div>
     </div>
   </div>
+  
+  <div class="modal fade" id="modalAjoutEleve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Ajouter un élève</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <label data-error="wrong" data-success="right" for="orangeForm-name">Nom de l'élève</label>
+          <input type="text" id="orangeForm-name" class="form-control validate">
+        </div>
+        <div class="md-form mb-5">
+          <label data-error="wrong" data-success="right" for="orangeForm-email">Prénom de l'élève</label>
+          <input type="email" id="orangeForm-email" class="form-control validate">
+        </div>
+
+        <div class="md-form mb-4">
+          <label data-error="wrong" data-success="right" for="orangeForm-pass">Date de naissance de l'élève</label>
+          <input type="password" id="orangeForm-pass" class="form-control validate">
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary">Ajouter l'élève</button>
+        <button class="btn btn-light" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Launch
+    Modal Register Form</a>
+</div>
   <script type="text/javascript">
   		var tableEleve;
   			
