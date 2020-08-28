@@ -34,7 +34,8 @@ public class EleveAjaxServlet extends HttpServlet {
 	}
 	
 	private static void getAllById(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		List<Eleve> listEleve = EleveManager.getInstance().listAll();
+		Integer idClasse = Integer.valueOf(request.getParameter("idClasse"));
+		List<Eleve> listEleve = EleveManager.getInstance().getAllById(idClasse);
 		JSONArray arrayJson = new JSONArray();
 		for(Eleve eleve : listEleve) {
 			JSONObject jsonObj = new JSONObject();

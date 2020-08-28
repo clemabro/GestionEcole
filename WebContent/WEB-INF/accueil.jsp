@@ -107,10 +107,15 @@
     </div>
   </div>
   <script type="text/javascript">
+  		var tableEleve;
+  			
 		$(document).ready(function() {
-				$('#tabEleve').DataTable(optionDataTable);
 		    	reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
-		    
+		    	
+		    	 $('#selectClasse').on('change', '', function (e) {
+			    	 tableEleve.destroy();
+			    	 reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
+			    });
 		} );
 		
 		var reloadTableByIdClasse = function(idClasse){
@@ -121,7 +126,7 @@
 		        method: "POST",
 		        data : {
 		        	"action" : "getAllById",
-		        	"id" : idClasse
+		        	"idClasse" : idClasse
 		        },
 		        success: function (data) {
 		            table.empty();
@@ -135,6 +140,8 @@
 		           
 		        }
 		    });
+		    
+		    tableEleve = $('#tabEleve').DataTable(optionDataTable);
 		}
 	</script>
 </body>
