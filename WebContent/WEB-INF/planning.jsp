@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		              allDay: false
 		            });
 		          //Update the database
-		            alert('Great. Now, update your database...');
+		            ajaxAjoutEvenement(date,titreStr);
 		          } else {
 		            alert('Date invalide.');
 		          }
@@ -178,4 +178,21 @@ document.addEventListener('DOMContentLoaded', function() {
 	  calendar.render();
 
 	});
+	
+	function ajaxAjoutEvenement(date, titre)
+	{
+		$.ajax({
+	        url: "<%= request.getContextPath() %>/addEvent",
+	        method: "POST",
+	        dataType : "json",
+	        data : {
+	        	"date" : date,
+	        	"titre" : titre
+	        },
+	        success: function (data) {
+	            console.log(data);
+	           
+	        }
+	    });
+	}
 </script>
