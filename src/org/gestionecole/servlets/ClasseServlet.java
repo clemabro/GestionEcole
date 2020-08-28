@@ -23,9 +23,13 @@ public class ClasseServlet extends HttpServlet {
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		User utilisateur = (User) session.getAttribute("user");
-		
-		List<Classe> listeClasses = ClasseManager.getInstance().listAll();
-		request.setAttribute("listClasses", listeClasses);
-		this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil.jsp").forward(request, response);
+
+		if(session != null & utilisateur != null) {
+			List<Classe> listeClasses = ClasseManager.getInstance().listAll();
+			request.setAttribute("listClasses", listeClasses);
+			this.getServletContext().getRequestDispatcher( "/WEB-INF/accueil.jsp").forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath() + "/connexion");
+		}
 	}
 }

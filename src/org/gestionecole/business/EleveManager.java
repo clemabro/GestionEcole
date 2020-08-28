@@ -23,4 +23,8 @@ public class EleveManager {
 	public List<Eleve> listAll() {
 		return getEleveDAO().listAll();
 	}
+
+	public List<Eleve> getAllById(Integer idClasse) {
+		return getEleveDAO().getAllById(idClasse);
+	}
 }

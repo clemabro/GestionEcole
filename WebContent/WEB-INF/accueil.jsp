@@ -42,7 +42,7 @@
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
+                	<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalAjoutEleve" onclick="addOptionSelectAdd()"><i class="fas fa-user-plus"></i> Ajouter un élève</a>
                 	<div class="table-responsive">
 	                 	<table id="tabEleve" class="table table-bordered" width="100%"	cellspacing="0">
 	                 		<thead>
@@ -67,15 +67,7 @@
       </div>
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+      <jsp:include page="footer.jsp"></jsp:include>
 
     </div>
     <!-- End of Content Wrapper -->
@@ -106,11 +98,55 @@
       </div>
     </div>
   </div>
+  
+  <div class="modal fade" id="modalAjoutEleve" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Ajouter un élève</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <label data-error="wrong" data-success="right" for="nomEleve">Nom de l'élève</label>
+          <input type="text" id="nomEleve" class="form-control validate">
+        </div>
+        <div class="md-form mb-5">
+          <label data-error="wrong" data-success="right" for="prenomEleve">Prénom de l'élève</label>
+          <input type="text" id="prenomEleve" class="form-control validate">
+        </div>
+
+        <div class="md-form mb-4">
+          <label data-error="wrong" data-success="right" for="dateNaiss">Date de naissance de l'élève</label>
+          <input type="date" id="dateNaiss" class="form-control validate">
+        </div>
+        
+        <div class="md-form mb-4">
+          	<label for="selectClasseAdd">Classe de l'élève : </label>
+          	<select class="form-control" id="selectClasseAdd" disabled>
+			</select>
+        </div>
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary" onclick="saveEleve(event)">Ajouter l'élève</button>
+        <button class="btn btn-light" data-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
   <script type="text/javascript">
+  		var tableEleve;
+  			
 		$(document).ready(function() {
-				$('#tabEleve').DataTable(optionDataTable);
 		    	reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
-		    
+		    	
+		    	 $('#selectClasse').on('change', '', function (e) {
+			    	 tableEleve.destroy();
+			    	 reloadTableByIdClasse($('#selectClasse').find(":selected").attr("id"));
+			    });
 		} );
 		
 		var reloadTableByIdClasse = function(idClasse){
@@ -119,9 +155,10 @@
 		    $.ajax({
 		        url: "<%= request.getContextPath() %>/eleveAjax",
 		        method: "POST",
+		        dataType : "json",
 		        data : {
 		        	"action" : "getAllById",
-		        	"id" : idClasse
+		        	"idClasse" : idClasse
 		        },
 		        success: function (data) {
 		            table.empty();
@@ -133,6 +170,39 @@
 		                    "<td>" + b.dateNaissance + "</td><td></td></tr>");
 		            });
 		           
+		        }
+		    });
+		    
+		    tableEleve = $('#tabEleve').DataTable(optionDataTable);
+		}
+		
+		var addOptionSelectAdd = function() {
+			optionToAdd = $('#selectClasse').find(":selected").clone();
+			$('#selectClasseAdd').children().remove();
+			$("#selectClasseAdd").append(optionToAdd);
+		}
+		
+		var saveEleve = function(event) {
+			event.preventDefault();
+			var idClasse = $('#selectClasseAdd').find(":selected").attr('id');
+			
+			$.ajax({
+		        url: "<%= request.getContextPath() %>/eleveAjax",
+		        method: "POST",
+		        data : {
+		        	"action" : "saveEleve",
+		        	"idClasse" : idClasse,
+		        	"nomEleve" : $('#nomEleve').val(),
+		        	"prenomEleve" : $('#prenomEleve').val(),
+		        	"dateNaissEleve" : $('#dateNaiss').val()
+		        },
+		        success: function (data) {
+		        	tableEleve.destroy();
+		        	reloadTableByIdClasse(idClasse);
+		        	$('#modalAjoutEleve').modal('toggle');
+		        },
+		        error : function(e) {
+		        	console.log(e)
 		        }
 		    });
 		}

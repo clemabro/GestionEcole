@@ -113,7 +113,7 @@ public class HibernateUtil {
 
 	public static void save(final Object object, final Session sessionHbn) {
 		sessionHbn.save(object);
-		sessionHbn.flush();
+		commit();
 	}
 
 	/**
