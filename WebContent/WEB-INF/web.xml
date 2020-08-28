@@ -33,4 +33,12 @@
 		<servlet-name>EleveAjaxServlet</servlet-name>
 		<url-pattern>/eleveAjax</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>DeconnexionServlet</servlet-name>
+		<servlet-class>org.gestionecole.servlets.DeconnexionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeconnexionServlet</servlet-name>
+		<url-pattern>/deconnexion</url-pattern>
+	</servlet-mapping>
 </web-app>
